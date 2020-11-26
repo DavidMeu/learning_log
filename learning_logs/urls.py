@@ -17,5 +17,8 @@ urlpatterns = [
 
     # Page for adding a new topic
     url(r'^new_topic/$', views.new_topic, name='new_topic'),
+
+    # Page for adding a new entry
+    url(r'new_topic/(?P<topic_id>\d+)/$', views.new_entry, name='new_entry'),
 ]
 
