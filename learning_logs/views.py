@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
@@ -10,11 +11,13 @@ def index(request):
     """The home page for Learning Log"""
     return render(request, 'learning_logs/index.html')
 
+@login_required
 def topics(request):
     """Show all topics."""
     topics = Topic.objects.order_by('date_added')
     context = {'topics': topics}
     return render(request, 'learning_logs/topics.html', context)
+
 
 def topic(request, topic_id):
     """Show a single topic and all its entries."""
@@ -22,6 +25,7 @@ def topic(request, topic_id):
     entries = topic.entry_set.order_by('-date_added')
     context = {'topic': topic, 'entries': entries}
     return render(request, 'learning_logs/topic.html', context)
+
 
 def new_topic(request):
     """Add a new topic."""
@@ -37,6 +41,7 @@ def new_topic(request):
 
     context = {'form': form}
     return render(request, 'learning_logs/new_topic.html', context)
+
 
 def new_entry(request, topic_id):
     """Add a new entry for a particular topic."""
@@ -56,6 +61,7 @@ def new_entry(request, topic_id):
 
     context = {'topic': topic, 'form': form}
     return render(request, 'learning_logs/new_entry.html', context)
+
 
 def edit_entry(request, entry_id):
     """Edit an existing entry."""

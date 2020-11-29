@@ -8,18 +8,19 @@
 
         <p>Entries:</p>
         <p>
-            <a href="{% url 'learning_logs:new_entry' topic.id %}">add new entry</a>
+            <a href="{% url 'learning_logs:new_entry' topic.id %}">Add new entry</a>
         </p>
         <ul>
             {% for entry in entries %}
-                <il>
+                <li>
                     <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
                     <p>{{ entry.text|linebreaks }}</p>
-                </il>
+                    <p> <a href="{% url 'learning_logs:edit_entry' entry.id %}">edit entry</a> </p>
+                </li>
             {% empty %}
-                <il>
+                <li>
                     There are no entries for this topic yet.
-                </il>
+                </li>
             {% endfor %}
         </ul>
     {% endblock content %}
